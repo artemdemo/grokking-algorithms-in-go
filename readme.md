@@ -1,4 +1,8 @@
 # Some basic algorithms written in Go
 
-Just playing arround with Go, while reading "Grokking algothims" by Aditya Y. Bhargava
+Just playing around with Go, while reading "Grokking algorithms" by Aditya Y. Bhargava
 
+## How to start
+
+1. Install Go on your machine
+1. Run `./test.sh`
