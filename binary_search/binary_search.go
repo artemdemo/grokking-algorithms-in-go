@@ -21,6 +21,8 @@ func BinarySearch(list []int, item int) (int, bool) {
 func BinarySearchRec(list []int, item int) (int, bool) {
     low := 0
     high := len(list) - 1
+    result := 0
+    ok := false
     if low <= high {
         mid := (low + high) / 2
         guess := list[mid]
@@ -28,12 +30,13 @@ func BinarySearchRec(list []int, item int) (int, bool) {
             return mid, true
         }
         if guess > item {
-            // high = mid - 1
-            return BinarySearchRec(list[low:mid], item)
+            result, ok = BinarySearchRec(list[low:mid], item)
+            return result, ok
         } else {
-            // low = mid + 1
-            return BinarySearchRec(list[mid + 1:high + 1], item)
+            newMid := mid + 1
+            result, ok = BinarySearchRec(list[newMid:high + 1], item)
+            return newMid + result, ok
         }
     }
-    return 0, false
+    return result, ok
 }
