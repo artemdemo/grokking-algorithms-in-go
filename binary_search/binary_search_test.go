@@ -47,3 +47,6 @@ func Test_BinarySearch(t *testing.T) {
     testSuits(t, BinarySearch)
 }
 
+func Test_BinarySearchRec(t *testing.T) {
+    testSuits(t, BinarySearchRec)
+}
