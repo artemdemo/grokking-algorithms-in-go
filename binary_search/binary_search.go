@@ -32,7 +32,7 @@ func BinarySearchRec(list []int, item int) (int, bool) {
             return BinarySearchRec(list[low:mid], item)
         } else {
             // low = mid + 1
-            return BinarySearchRec(list[mid + 1:high], item)
+            return BinarySearchRec(list[mid + 1:high + 1], item)
         }
     }
     return 0, false
