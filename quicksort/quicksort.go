@@ -12,9 +12,14 @@ func Quicksort(arr []int) []int {
     rand.Seed(time.Now().Unix())            // initialize global pseudo random generator
     pivotIndex := rand.Intn(len(arr) - 1)   // selecting random element from a given array
     pivot := arr[pivotIndex]
+
+    // removing pivot from the array,
+    // while maintaining the order of items
+    arrWithoutPivot := append(arr[:pivotIndex], arr[pivotIndex+1:]...)
+
     var less []int
     var greater []int
-    arrWithoutPivot := append(arr[:pivotIndex], arr[pivotIndex+1:]...)
+
     for _, num := range arrWithoutPivot {
         if num <= pivot {
             less = append(less, num)
@@ -22,6 +27,7 @@ func Quicksort(arr []int) []int {
             greater = append(greater, num)
         }
     }
+
     return append(
         append(Quicksort(less), pivot),
         Quicksort(greater)...
