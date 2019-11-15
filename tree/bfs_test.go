@@ -13,20 +13,24 @@ func Test_Bfs(t *testing.T) {
         alice := Person{name: "Alice", isSeller: false}
         bob := Person{name: "Bob", isSeller: false}
         claire := Person{name: "Claire", isSeller: false}
-        
-        alex.addFriend(alice)
-        alex.addFriend(bob)
-        alex.addFriend(claire)
+
+        alex.addFriend(&alice)
+        alex.addFriend(&bob)
+        alex.addFriend(&claire)
 
         peggy := Person{name: "Peggy", isSeller: false}
 
-        bob.addFriend(peggy)
+        bob.addFriend(&peggy)
+
+        fmt.Println(alex.friends[1].name)
+        fmt.Println(alex.friends[1].friends)
+        fmt.Println(bob)
 
         thom := Person{name: "Thom", isSeller: false}
         johny := Person{name: "Johny", isSeller: true}
 
-        claire.addFriend(thom)
-        claire.addFriend(johny)
+        claire.addFriend(&thom)
+        claire.addFriend(&johny)
 
         friendsList[alex.name] = alex
         friendsList[bob.name] = bob
@@ -36,12 +40,10 @@ func Test_Bfs(t *testing.T) {
         friendsList[thom.name] = thom
         friendsList[johny.name] = johny
 
-        result, ok := SearchForSeller(friendsList, "Alex")
+        _, ok := SearchForSeller(friendsList, "Alex")
 
         if ok != true {
             t.Fatalf("SearchForSeller() should return `%v`, got \"%v\" instead", true, ok)
         }
-
-        fmt.Println(result)
     })
 }

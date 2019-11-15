@@ -16,10 +16,13 @@ type Person struct {
     name string
     // `isSeller` is a custom property, just to look something for
     isSeller bool
-    friends []*Person
+    friends []Person
 }
-func (person *Person) addFriend(friend Person) {
-    person.friends = append(person.friends, &friend)
+func appendFriend(friendsList *[]Person, person *Person) {
+    *friendsList = append(*friendsList, *person)
+}
+func (person *Person) addFriend(friend *Person) {
+    appendFriend(&person.friends, friend)
 }
 
 type PersonsMap map[string]Person
@@ -50,6 +53,7 @@ func SearchForSeller(personsMap PersonsMap, name string) (Person, bool) {
             break
         }
         person, ok := searchQueue.PopLeft().(Person)
+
         if ok && contains(searched, person) == false {
             if person.isSeller {
                 return person, true
