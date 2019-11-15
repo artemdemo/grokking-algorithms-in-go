@@ -1,7 +1,6 @@
 package tree
 
 import (
-    "fmt"
     "testing"
 )
 
@@ -22,10 +21,6 @@ func Test_Bfs(t *testing.T) {
 
         bob.addFriend(&peggy)
 
-        fmt.Println(alex.friends[1].name)
-        fmt.Println(alex.friends[1].friends)
-        fmt.Println(bob)
-
         thom := Person{name: "Thom", isSeller: false}
         johny := Person{name: "Johny", isSeller: true}
 
@@ -40,10 +35,13 @@ func Test_Bfs(t *testing.T) {
         friendsList[thom.name] = thom
         friendsList[johny.name] = johny
 
-        _, ok := SearchForSeller(friendsList, "Alex")
+        person, ok := SearchForSeller(friendsList, "Alex")
 
         if ok != true {
             t.Fatalf("SearchForSeller() should return `%v`, got \"%v\" instead", true, ok)
+        }
+        if person != &johny {
+            t.Fatalf("SearchForSeller() should return pointer to %v, got %v instead", &johny, person)
         }
     })
 }
