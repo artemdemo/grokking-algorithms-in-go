@@ -5,9 +5,9 @@ Just playing around with Go, while reading "Grokking algorithms" by Aditya Y. Bh
 ## How to start
 
 1. Install Go on your machine
-1. Run `./test.sh`
+1. Run `./tests.sh`
 
 ## Tests
 
-* `./test.sh` - run with terminal only output
-* `./test.sh --html` - get detailed output of covered lines
+* `./tests.sh` - run with terminal only output
+* `./tests.sh --html` - get detailed output of covered lines
