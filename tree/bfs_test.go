@@ -5,6 +5,22 @@ import (
 )
 
 func Test_Bfs(t *testing.T) {
+    t.Run("noSellers", func(t *testing.T) {
+        friendsList := make(PersonsMap)
+        alex := Person{name: "Alex", isSeller: false}
+        alice := Person{name: "Alice", isSeller: false}
+        bob := Person{name: "Bob", isSeller: false}
+        claire := Person{name: "Claire", isSeller: false}
+        alex.addFriend(&alice)
+        alex.addFriend(&bob)
+        alex.addFriend(&claire)
+
+        _, ok := SearchForSeller(friendsList, "Alex")
+        if ok != false {
+            t.Fatalf("SearchForSeller() should return `%v`, got \"%v\" instead", true, ok)
+        }
+    })
+
     t.Run("findASeller", func(t *testing.T) {
         friendsList := make(PersonsMap)
 
