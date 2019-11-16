@@ -23,8 +23,8 @@ func Test_Dijkstra(t *testing.T) {
         nodeA.addConnection(nodeB, 5)
         nodeA.addConnection(nodeC, 1)
 
-        nodeB.addConnection(nodeD, 5)
-        nodeC.addConnection(nodeD, 1)
+        nodeB.addConnection(nodeD, 2)
+        nodeC.addConnection(nodeD, 3)
 
         path, price, ok := Dijkstra(nodeA, nodeD)
 
@@ -33,7 +33,7 @@ func Test_Dijkstra(t *testing.T) {
             t.Fatalf("Dijkstra() should return ok=`%v`, got \"%v\" instead", expectedOk, ok)
         }
 
-        expectedPrice := 2
+        expectedPrice := 4
         if price != float64(expectedPrice) {
             t.Fatalf("Dijkstra() should return price=`%v`, got \"%v\" instead", expectedPrice, price)
         }
