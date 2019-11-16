@@ -5,6 +5,14 @@ import (
     "testing"
 )
 
+func pathToString(path []*Node) string {
+    var pathNames []string
+    for _, node := range path {
+        pathNames = append(pathNames, node.name)
+    }
+    return fmt.Sprint(pathNames)
+}
+
 func Test_Dijkstra(t *testing.T) {
     t.Run("calcSimplePath", func(t *testing.T) {
         nodeA := NewNode("A")
@@ -19,13 +27,6 @@ func Test_Dijkstra(t *testing.T) {
         nodeC.addConnection(nodeD, 1)
 
         path, price, ok := Dijkstra(nodeA, nodeD)
-        var pathNames []string
-
-        for _, node := range path {
-            pathNames = append(pathNames, node.name)
-        }
-
-        fmt.Println(pathNames)
 
         expectedOk := true
         if ok != expectedOk {
@@ -35,6 +36,12 @@ func Test_Dijkstra(t *testing.T) {
         expectedPrice := 2
         if price != float64(expectedPrice) {
             t.Fatalf("Dijkstra() should return price=`%v`, got \"%v\" instead", expectedPrice, price)
+        }
+
+        resultStr := pathToString(path)
+        expectedResult := "[A C D]"
+        if resultStr != expectedResult {
+            t.Fatalf("Dijkstra() should return path=`%v`, got \"%v\" instead", expectedResult, resultStr)
         }
     })
 }
