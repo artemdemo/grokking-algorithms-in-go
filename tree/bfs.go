@@ -26,7 +26,7 @@ func (person *Person) addFriend(friend *Person) {
 
 type PersonsMap map[string]Person
 
-// Check whether slice (haystack) has an given item (needle) in it
+// Check whether slice (haystack) has given item (needle) in it
 func contains(haystack []*Person, needle *Person) bool {
     for idx, _ := range haystack {
         // Here I'm using index reference, and not item.
