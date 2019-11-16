@@ -38,6 +38,14 @@ func contains(haystack []*Person, needle *Person) bool {
     return false
 }
 
+func addFriendsToQueue(queue *deque.Deque, friends []*Person) {
+    // Here I'm using index reference, and not item.
+    // Because item will always be a copy of an object.
+    for idx, _ := range friends {
+        queue.PushRight(friends[idx])
+    }
+}
+
 /**
  * Breadth-first search
  */
@@ -46,11 +54,8 @@ func SearchForSeller(personsMap PersonsMap, name string) (*Person, bool) {
     firstInLine := personsMap[name]
     searchQueue.PushRight(&firstInLine)
 
-    // Here I'm using index reference, and not item.
-    // Because item will always be a copy of an object.
-    for idx, _ := range firstInLine.friends {
-        searchQueue.PushRight(firstInLine.friends[idx])
-    }
+    addFriendsToQueue(searchQueue, firstInLine.friends)
+
     var searched []*Person
     searched = append(searched, &firstInLine)
 
@@ -64,9 +69,7 @@ func SearchForSeller(personsMap PersonsMap, name string) (*Person, bool) {
            if personPointer.isSeller {
                return personPointer, true
            } else {
-               for _, friend := range personPointer.friends {
-                   searchQueue.PushRight(friend)
-               }
+               addFriendsToQueue(searchQueue, personPointer.friends)
                searched = append(searched, personPointer)
            }
        }
