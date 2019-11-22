@@ -75,4 +75,41 @@ func Test_Dijkstra(t *testing.T) {
             t.Fatalf("Dijkstra() should return path=`%v`, got \"%v\" instead", expectedResult, resultStr)
         }
     })
+
+    t.Run("exercise_1", func(t *testing.T) {
+        nodeStart := NewNode("Start")
+        nodeA := NewNode("A")
+        nodeB := NewNode("B")
+        nodeC := NewNode("C")
+        nodeD := NewNode("D")
+        nodeFin := NewNode("Fin")
+
+        nodeStart.addConnection(nodeA, 5)
+        nodeStart.addConnection(nodeB, 2)
+        nodeB.addConnection(nodeA, 8)
+        nodeB.addConnection(nodeD, 7)
+        nodeA.addConnection(nodeC, 4)
+        nodeA.addConnection(nodeD,2)
+        nodeC.addConnection(nodeD, 6)
+        nodeC.addConnection(nodeFin, 3)
+        nodeD.addConnection(nodeFin, 1)
+
+        path, price, ok := Dijkstra(nodeStart, nodeFin)
+
+        expectedOk := true
+        if ok != expectedOk {
+            t.Fatalf("Dijkstra() should return ok=`%v`, got \"%v\" instead", expectedOk, ok)
+        }
+
+        expectedPrice := 8
+        if price != float64(expectedPrice) {
+            t.Fatalf("Dijkstra() should return price=`%v`, got \"%v\" instead", expectedPrice, price)
+        }
+
+        resultStr := pathToString(path)
+        expectedResult := "[Start A D Fin]"
+        if resultStr != expectedResult {
+            t.Fatalf("Dijkstra() should return path=`%v`, got \"%v\" instead", expectedResult, resultStr)
+        }
+    })
 }
