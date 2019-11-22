@@ -2,8 +2,9 @@ package greedy
 
 import (
     "fmt"
-    "testing"
     "github.com/deckarep/golang-set"
+    "sort"
+    "testing"
 )
 
 func producersToString(producers []*Producer) string {
@@ -11,6 +12,7 @@ func producersToString(producers []*Producer) string {
     for _, producer := range producers {
         producersList = append(producersList, producer.name)
     }
+    sort.Strings(producersList)
     return fmt.Sprint(producersList)
 }
 
@@ -48,7 +50,7 @@ func Test_FindCoverage(t *testing.T) {
         }
 
         resultStr := producersToString(result)
-        expectedResult := "[A C D]"
+        expectedResult := producersToString([]*Producer{&kfive, &kone, &kthree, &ktwo})
         if resultStr != expectedResult {
             t.Fatalf("FindCoverage() should return path=`%v`, got \"%v\" instead", expectedResult, resultStr)
         }
