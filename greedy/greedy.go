@@ -11,14 +11,9 @@ type Producer struct {
     name string
 }
 
-type mapOfActorSets map[*Producer]mapset.Set
+type MapOfActorSets map[*Producer]mapset.Set
 
-func FindCoverage(desiredActors mapset.Set, actorGroups mapOfActorSets) []*Producer {
-    var set mapset.Set
-    set := NewSetFromSlice([]interface{}{
-        &YourType{Name: "Alise"},
-        &YourType{Name: "Bob"},
-        &YourType{Name: "John"},
-        &YourType{Name: "Nick"},
-    })
+func FindCoverage(desiredActors mapset.Set, actorGroups MapOfActorSets) ([]*Producer, bool) {
+    test := make(MapOfActorSets)
+    return test, true
 }
