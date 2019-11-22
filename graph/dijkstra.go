@@ -46,22 +46,18 @@ type Edge struct {
  */
 type Costs map[*Node]float64
 
-// Check whether slice (haystack) has given item (needle) in it
-func contains(haystack []*Node, needle *Node) bool {
-    for idx, _ := range haystack {
-        // Here I'm using index reference, and not item.
-        // Because item will always be a copy of an object.
-        if haystack[idx] == needle {
-            return true
-        }
-    }
-    return false
-}
-
-func addNodeEdgesToWalkQueue(queue *deque.Deque, node *Node) {
+func addNodeEdgesToWalkQueue(queue *deque.Deque, costs Costs, node *Node) {
     for _, edge := range node.edges {
         if edge.toNode != node {
-            queue.PushRight(edge)
+            if toNodeCurrentPrice, ok := costs[edge.toNode]; ok {
+                // In order to prevent circular dependencies,
+                // I'm checking whether edge will help te reduce price of the next node.
+                if toNodeCurrentPrice > float64(edge.price) + costs[edge.fromNode]  {
+                    queue.PushRight(edge)
+                }
+            } else {
+                queue.PushRight(edge)
+            }
         }
     }
 }
@@ -104,7 +100,7 @@ func Dijkstra(startNode *Node, endNode *Node) ([]*Node, float64, bool) {
     // Start node will always have cost of 0
     costs[startNode] = 0
 
-    addNodeEdgesToWalkQueue(walkQueue, startNode)
+    addNodeEdgesToWalkQueue(walkQueue, costs, startNode)
 
     for {
         if walkQueue.Size() == 0 {
@@ -122,7 +118,7 @@ func Dijkstra(startNode *Node, endNode *Node) ([]*Node, float64, bool) {
             if newCost < oldCost {
                 costs[edge.toNode] = newCost
             }
-            addNodeEdgesToWalkQueue(walkQueue, edge.toNode)
+            addNodeEdgesToWalkQueue(walkQueue, costs, edge.toNode)
         }
     }
 
