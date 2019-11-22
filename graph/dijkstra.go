@@ -72,11 +72,12 @@ func addNodeEdgesToWalkQueue(queue *deque.Deque, node *Node) {
  */
 func findPathBetweenNodes(path []*Node, costs Costs, startNode *Node, endNode *Node) []*Node {
     var nextNode *Node
-    nextNodePrice := math.Inf(+1)
 
     for _, edge := range endNode.edges {
-        if edge.toNode == endNode && costs[edge.fromNode] < nextNodePrice {
-            nextNodePrice = costs[edge.fromNode]
+        // The idea is to take endNode and find edge that has been used.
+        // If "endNode cost" minus "the edge" equals to the "fromNode",
+        // then this exact path was taken.
+        if edge.toNode == endNode && costs[endNode] - float64(edge.price) == costs[edge.fromNode] {
             nextNode = edge.fromNode
         }
     }
@@ -105,17 +106,13 @@ func Dijkstra(startNode *Node, endNode *Node) ([]*Node, float64, bool) {
 
     addNodeEdgesToWalkQueue(walkQueue, startNode)
 
-    var visited []*Node
-
     for {
         if walkQueue.Size() == 0 {
             break
         }
         edge, ok := walkQueue.PopLeft().(Edge)
 
-        if ok && contains(visited, edge.toNode) == false {
-            visited = append(visited, edge.fromNode)
-
+        if ok {
             var oldCost = math.Inf(+1)
             if val, ok := costs[edge.toNode]; ok {
                 oldCost = val
