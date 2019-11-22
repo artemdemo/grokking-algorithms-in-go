@@ -2,7 +2,7 @@
 
 if [[ $* == *--html* ]]
 then
-  go test ./binary_search ./quicksort ./tree ./graph -test.v -cover -coverprofile="coverage.out"
+  go test ./binary_search ./quicksort ./tree ./graph ./greedy -test.v -cover -coverprofile="coverage.out"
   go tool cover -html="coverage.out"
 else
   echo "binary_search/*"
@@ -16,4 +16,7 @@ else
 
   echo "graph/*"
   go test ./graph -test.v -cover
+
+  echo "greedy/*"
+  go test ./greedy -test.v -cover
 fi
